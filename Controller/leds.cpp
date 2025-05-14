@@ -72,6 +72,9 @@ void off_back_right() {
 }
 
 void turn_left(bool front, bool back, bool brake, uint32_t i, bool reset) {
+  strip.setLedColorData(2, 200, 30, 0);
+  strip.setLedColorData(9, 200, 30, 0);
+  return;
   int color1, color2, color3;
   color1 = 0;
   color2 = 0;
@@ -125,6 +128,9 @@ void turn_left(bool front, bool back, bool brake, uint32_t i, bool reset) {
 }
 
 void turn_right(bool front, bool back, bool brake, uint32_t i, bool reset) {
+  strip.setLedColorData(3, 200, 30, 0);
+  strip.setLedColorData(8, 200, 30, 0);
+  return;
   int color1, color2, color3;
   color1 = 0;
   color2 = 0;
@@ -177,8 +183,7 @@ void turn_right(bool front, bool back, bool brake, uint32_t i, bool reset) {
   }
 }
 
-void processLeds(ControllerPtr ctl, int32_t i) {
-  auto buttons = ctl->buttons();
+void processLeds(int32_t i) {
   static uint8_t led_turn_right = 0;
   static bool right_prev = false;
   static uint8_t led_turn_left = 0;
@@ -187,43 +192,7 @@ void processLeds(ControllerPtr ctl, int32_t i) {
   static bool led_front = false; // todo
   static bool front_prev = false;
   static bool led_back = false;
-  if (buttons & 0x08) {
-    if (!front_prev) {
-      led_front = !led_front;
-      led_back = !led_back;
-    }
-    front_prev = true;
-  } else {
-    front_prev = false;
-  }
-  bool led_brake = ctl->axisRY() > 10;
-
-  if (buttons & 0x0002) {
-    if (!right_prev) {
-      if (led_turn_right == 0) {
-        led_turn_right = 1;
-        led_turn_left = 0;
-      } else {
-        led_turn_right = 0;
-      }
-    }
-    right_prev = true;
-  } else {
-    right_prev = false;
-  }
-  if (buttons & 0x0004) {
-    if (!left_prev) {
-      if (led_turn_left == 0) {
-        led_turn_left = 1;
-        led_turn_right = 0;
-      } else {
-        led_turn_left = 0;
-      }
-    }
-    left_prev = true;
-  } else {
-    left_prev = false;
-  }
+  static bool led_brake = false;
 
   if (led_front) {
     front();

@@ -33,6 +33,4 @@ void turn_left(bool front, bool back, bool brake, uint32_t i, bool reset);
 
 void turn_right(bool front, bool back, bool brake, uint32_t i, bool reset);
 
-void processLeds(ControllerPtr ctl, int32_t i);
-
 #endif // INCLUDE_LEDS_HPP_
